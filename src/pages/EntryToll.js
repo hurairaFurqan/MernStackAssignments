@@ -11,12 +11,13 @@ const EntryToll = (props) => {
     e.preventDefault();
     //console.log(data);
     props.add(data);
+    alert("Information saved. Click on exit toll ");    
   };
   return (
     <div>
       EntryToll
       <form onSubmit={handleSubmit}>
-        <select name={"interchange"} value={data.interchange} onChange={(e) => handleChange(e)}>
+        <select name={"interchange"} required value={data.interchange} onChange={(e) => handleChange(e) }> 
           <option value="Sargodha">Sargodha</option>
           <option value="Sahiwal">Sahiwal</option>
           <option defaultValue="Lahore">Lahore</option>
@@ -24,9 +25,10 @@ const EntryToll = (props) => {
         </select>
 
         <input
-          placeholder="Number-Plate"
+          placeholder="LLL-NNNN"
           name={"numberPlate"}
           type={"text"}
+          required
           value={data.numberPlate}
           onChange={(e) => handleChange(e)}
         ></input>
@@ -35,6 +37,7 @@ const EntryToll = (props) => {
           type={"date"}
           placeholder={"date"}
           name={"date"}
+          required
           value={data.date}
           onChange={(e) => handleChange(e)}
         ></input>

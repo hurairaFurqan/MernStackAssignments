@@ -15,7 +15,7 @@ function App() {
       <Layout />
       <Routes>
         <Route path="/" element={<EntryToll add = {add}></EntryToll>}/>
-        <Route path="exitToll" element={<ExitToll data = {data}></ExitToll>}></Route>
+        <Route path="exitToll" element={<ExitToll entryTollData = {data}></ExitToll>}></Route>
       </Routes>
     </div>
   );
