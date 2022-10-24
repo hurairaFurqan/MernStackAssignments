@@ -13,7 +13,7 @@ const Layout = () => {
               <Nav.Link to={"/"} as={NavLink}>
                 Admin
               </Nav.Link>
-              <Nav.Link to={"/blog"} as={NavLink}>
+              <Nav.Link to={"/user"} as={NavLink}>
                 User
               </Nav.Link>
             </Nav>

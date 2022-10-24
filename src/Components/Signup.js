@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-
 const BASEURL = "http://localhost:8000/users/signUP";
 const Signup = (props) => {
   const [signUpData, setSignUpData] = useState({});
@@ -16,15 +15,12 @@ const Signup = (props) => {
 
     console.log(signUpData);
 
-    try {
-        await axios.post(BASEURL, signUpData).then((response) => {
-            console.log(response.data);
-        })
-    } catch (error) {
-        console.log(error);
-    }
-  };
-
+    await axios.post(BASEURL, signUpData).then((response) => {
+      console.log(response.data);
+    }).catch(error => {
+      console.log(error.message);
+    });
+  }
   const handleSignUP = () => {
     props.showSignUP(false);
   };

@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const BASEURL = "http://localhost:8000/users/singIN";
+const BASEURL = "http://localhost:8000/users/signIN";
 const Signin = (props) => {
   const [signInData, setSignInData] = useState({});
-
-  const [jwtPayload, setJwtPayload] = useState({});
+  const [signIn, setSignIN] = useState(false);
+  const [errorRes, setErrorRes] = useState("");
+  // const [jwtPayload, setJwtPayload] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,18 +17,22 @@ const Signin = (props) => {
     e.preventDefault();
 
     console.log("data in SignIN state", signInData);
-    axios.post(BASEURL, signInData).then((response) => {
-      //console.log('response: ',response.data.name,response.data.role);
-      if (response.data.access_token) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify(response.data.access_token)
-        );
-        
-      }
-    });
-
-    console.log(jwtPayload);
+    axios
+      .post(BASEURL, signInData)
+      .then((response) => {
+        //console.log('response: ',response.data);
+        if (response.data.access_token) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          setSignIN(true);
+          //window.location.href = '/user';
+        }
+        // setJwtPayload(response.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        setErrorRes(error.response.data);
+      });
+    //console.log("in jwtPayLoad state", jwtPayload);
   };
   const handleSignUP = () => {
     props.showSignUP(true);
@@ -38,7 +43,7 @@ const Signin = (props) => {
         <input
           type={"text"}
           name={"name"}
-          value={signInData.name}
+          value={signInData.name || ""}
           placeholder={"Enter your name"}
           required
           onChange={(e) => handleChange(e)}
@@ -47,7 +52,7 @@ const Signin = (props) => {
         <input
           type={"password"}
           name={"password"}
-          value={signInData.password}
+          value={signInData.password || ""}
           placeholder={"Enter your password"}
           required
           onChange={(e) => handleChange(e)}
@@ -56,6 +61,11 @@ const Signin = (props) => {
         <button type="submit">Log In</button>
       </form>
       <button onClick={handleSignUP}>Click here to SignUp</button>
+      {signIn ? (
+        <p> you are Logged In</p>
+      ) : (
+        <p>you are not logged IN due to {errorRes}</p>
+      )}
     </>
   );
 };
