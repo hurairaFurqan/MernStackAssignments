@@ -1,67 +1,42 @@
-import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Admin from "./pages/Admin";
-import Layout from "./pages/Layout";
+import Layout from "./Components/Layout";
 import User from "./pages/User";
-import Signin from "./Components/Signin";
-import Signup from "./Components/Signup";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
+import Logout from "./pages/Logout";
+import { AuthContext } from "./context/AuthContext";
+import { useContext } from "react";
 
-// const BASEURL = "http://localhost:8000/users";
+import loader from "./loader.gif";
+import Store from "./pages/Store";
+
 function App() {
-  // const getData = () => {
-  //   axios.get(BASEURL).then((response) => {
-  //     console.log(response.data);
-  //   });
-  // };
-
-  const [showSignuUp, setSignUp] = useState(false);
-  //const [userCredentials, setUserCredentials] = useState({});
-
-  // useEffect(() => {
-
-  //   const user = JSON.parse(localStorage.getItem("user"));
-
-  //   setUserCredentials(user);
-
-  //   console.log('user credentials', userCredentials);
-  // },[userCredentials]);
-
-  // const addCredentials = () => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   setUserCredentials({ ...userCredentials, user });
-  //   if (userCredentials.user && userCredentials.user.access_token) {
-  //     console.log("credentials state:", userCredentials);
-  //     return { authorization: userCredentials.user.access_token };
-  //   } else {
-  //     console.log("credentials state:", userCredentials);
-  //     return {};
-  //   }
-  // };
-
-  const showSignUP = (boolValue) => {
-    setSignUp(boolValue);
-    // addCredentials();
-  };
-
+  const { token, user } = useContext(AuthContext);
+  // console.log(token, user);
+  console.log("app.js");
   return (
     <div className="App">
-      {showSignuUp === true ? (
-        <Signup showSignUP={showSignUP} />
-      ) : (
-        <Signin showSignUP={showSignUP} />
-      )}
-
-      {}
-
       <Layout />
-      <Routes>
-        <Route path="/" element={<Admin></Admin>}></Route>
-        <Route
-          path="/user"
-          element={<User></User>}
-        ></Route>
-      </Routes>
+
+      {token ? (
+        user ? (
+          <Routes>
+            <Route path="/admin" element={<Admin></Admin>}></Route>
+            <Route path="/user" element={<User></User>}></Route>
+            <Route path="/store" element={<Store></Store>}></Route>
+            <Route path="/logout" element={<Logout></Logout>}></Route>
+          </Routes>
+        ) : (
+          <img src={loader}></img>
+        )
+      ) : (
+        <Routes>
+          <Route path="/" element={<Signin></Signin>}></Route>
+          <Route path="/signUp" element={<Signup></Signup>}></Route>
+        </Routes>
+      )}
     </div>
   );
 }

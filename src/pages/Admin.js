@@ -1,23 +1,28 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { API_BASEURL_USERS } from "../context/constants";
 
-const Admin = (props) => {
+const Admin = () => {
+  console.log("in Admin component");
+
+  const { user, token } = useContext(AuthContext);
   const [access, setAccess] = useState(false);
   const [errorRes, setErrorRes] = useState("");
+
   const handleAccess = () => {
-    console.log("in log function");
-    const user = JSON.parse(localStorage.getItem("user"));
-    //console.log(user);
-    if (user && user.access_token) {
+    console.log("token", token, "user", user.role);
+    if (token && user.role) {
+      console.log("in if condit");
       const config = {
         headers: {
-          Authorization: `Bearer ${user.access_token}`,
-          role: user.role,
+          Authorization: `Bearer ${token}`,
         },
       };
 
+      console.log("token in headers of admin js",config.headers.Authorization);
       axios
-        .get("http://localhost:8000/users/admin", config)
+        .get(`${API_BASEURL_USERS}/admin`, config)
         .then((res) => {
           console.log("res.status: ", res);
           setAccess(true);
@@ -27,28 +32,20 @@ const Admin = (props) => {
           setAccess(false);
           setErrorRes(error.response.data);
         });
-    }
-    else{
-        alert("there is no JWT TOKEN ASSIGNED TO YOU PLEASE LOGIN")
+    } else {
+      console.log("there is no JWT TOKEN ASSIGNED TO YOU PLEASE LOGIN");
     }
   };
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    alert("you are logged out")
-  };
-  //   useEffect(() => {});
   return (
     <>
-      <button onClick={handleAccess}>Check Access Status</button>
-
+      <button onClick={handleAccess} className="btn btn-primary mt-4">
+        Check Access Status
+      </button>
       {access ? (
         <p>you have access to admin</p>
       ) : (
         <p>Access denied due to {errorRes}</p>
       )}
-
-      <button onClick={handleLogout}>Logout</button>
     </>
   );
 };

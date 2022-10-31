@@ -21,13 +21,18 @@ router.post("/signUP", async (req, res) => {
   }
 });
 
-router.post("/signIN", getHash, (req, res) => {
+router.post("/signin", getHash, (req, res) => {
   try {
     let name = req.body.name;
     let password = req.body.password;
     let hashValue = res.user.password;
     let dbName = res.user.name;
     let role = res.user.role;
+
+    const user = {
+      name: dbName,
+      role: role,
+    };
 
     const bool = bcrypt.compareSync(password, hashValue);
 
@@ -39,7 +44,7 @@ router.post("/signIN", getHash, (req, res) => {
         },
         "secretKeyWord"
       );
-      res.status(200).json({ access_token: token, name: dbName, role: role });
+      res.status(200).json({ access_token: token, user: user });
 
       //res.status(200).send({ status: "success", name, password, hashValue, bool });
     } else {
@@ -135,5 +140,6 @@ router.get("/user", auth, userMiddleWare, (req, res) => {
     res.status(401).json(error.message);
   }
 });
+
 
 module.exports = router;

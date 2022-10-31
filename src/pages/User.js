@@ -1,23 +1,26 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { API_BASEURL_USERS } from "../context/constants";
 
 const User = () => {
+  console.log('in User component');
+
+  const {user, token} = useContext(AuthContext)
   const [access, setAccess] = useState(false);
   const [errorRes, setErrorRes] = useState("");
   const handleAccess = () => {
     console.log("in log function");
-    const user = JSON.parse(localStorage.getItem("user"));
-    //console.log(user);
-    if (user && user.access_token) {
+    if (user) {
       const config = {
         headers: {
-          Authorization: `Bearer ${user.access_token}`,
+          Authorization: `Bearer ${token}`,
           role: user.role,
         },
       };
 
       axios
-        .get("http://localhost:8000/users/user", config)
+        .get(`${API_BASEURL_USERS}/user`, config)
         .then((res) => {
           console.log("res.status: ", res);
           setAccess(true);
@@ -41,7 +44,7 @@ const User = () => {
   };
   return (
     <>
-      <button onClick={handleAccess}>Check Access Status</button>
+      <button onClick={handleAccess} className='btn btn-primary mt-4'>Check Access Status</button>
 
       {access ? (
         <p>you have access to user profile</p>
@@ -49,7 +52,7 @@ const User = () => {
         <p>Access denied due to {errorRes}</p>
       )}
 
-      <button onClick={handleLogout}>Logout</button>
+      <button onClick={handleLogout} className='btn btn-secondary' >Logout</button>
     </>
   );
 };
