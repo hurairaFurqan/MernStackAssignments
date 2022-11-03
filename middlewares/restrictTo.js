@@ -3,7 +3,7 @@ module.exports = (role) => {
   return (req, res, next) => {
     if (req.user.role !== role) {
       console.log("req.user.role", req.user.role, "role", role);
-      return next(new AppError("new error with no solid proof",403))
+      return next(new AppError("roles of candidate and DB user not matched",403))
     }
     next();
   };
