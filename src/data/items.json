@@ -1,15 +1,15 @@
 [
   {
     "id": 1,
-    "name": "Book",
+    "name": "Atomic Habits",
     "price": 10.99,
-    "imgUrl": "publicimgs\books.jpg"
+    "imgUrl": "/imgs/books.jpg"
   },
   {
     "id": 2,
-    "name": "horses",
+    "name": "Serene",
     "price": 1199,
-    "imgUrl": "publicimgshorses.jpg"
+    "imgUrl": "/imgs/horses.jpg"
   },
   {
     "id": 3,
@@ -19,8 +19,15 @@
   },
   {
     "id": 4,
-    "name": "Car",
+    "name": "Bugatti Chiron",
     "price": 14000,
-    "imgUrl": "publicimgscars.jpg"
+    "imgUrl": "/imgs/cars.jpg"
+  }
+  ,
+  {
+    "id": 5,
+    "name": "Skirts",
+    "price": 5000,
+    "imgUrl": "/imgs/skirt.jpg"
   }
 ]

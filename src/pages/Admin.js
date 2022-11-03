@@ -33,7 +33,7 @@ const Admin = () => {
           setErrorRes(error.response.data);
         });
     } else {
-      console.log("there is no JWT TOKEN ASSIGNED TO YOU PLEASE LOGIN");
+      console.log("there is no JWT TOKEN OR USER IN USESTATE");
     }
   };
   return (

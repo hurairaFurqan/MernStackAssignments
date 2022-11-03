@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { AuthContext } from "../context/AuthContext";
 const Layout = () => {
   console.log("in layout.js");
+  const { cartItems, cartQuantity, openCart, closeCart } =
+    useContext(AuthContext);
   return (
     <>
       <Navbar bg="light" expand="lg" className="shadow-sm">
@@ -35,10 +38,12 @@ const Layout = () => {
               </Nav.Link>
             </Navbar.Collapse>
           </Nav>
-          <Button
+          {cartQuantity > 0 && (
+            <Button
             style={{ width: "3rem", height: "3rem", position: "relative" }}
             variant="outline-primary"
             className="rounded-circle"
+            onClick={openCart}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -59,9 +64,10 @@ const Layout = () => {
                 transform: "translate(25%,25%)",
               }}
             >
-              3
+              {cartQuantity}
             </div>
           </Button>
+          )}
         </Container>
       </Navbar>
     </>
