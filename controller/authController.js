@@ -35,7 +35,7 @@ exports.SignIn = catchAsync(async (req, res) => {
   if (user.correctPassword(password, user.password)) {
     const token = jwt.sign(
       {
-        exp: Math.floor(Date.now() / 1000) + 60 * 30,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60,
         iat: Math.floor(Date.now / 1000),
         id: user._id,
       },

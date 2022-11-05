@@ -1,13 +1,18 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+
+
 // const bodyParser = require("body-parser");
 
 const cors = require("cors");
-const authRouter = require("../Auth-backend Express/router/auth");
-const userRouter = require("../Auth-backend Express/router/user");
-const dbConnect = require("../Auth-backend Express/utils/dbConnect");
-const AppError = require("../Auth-backend Express/utils/appError");
+const authRouter = require("../AuthStore-Backend/router/auth");
+const userRouter = require("../AuthStore-Backend/router/user");
+const dbConnect = require("../AuthStore-Backend/utils/dbConnect");
+const productRouter = require('../AuthStore-Backend/router/product');
+const AppError = require("../AuthStore-Backend/utils/appError");
+const path = require('path')
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 dbConnect();
 
@@ -18,6 +23,9 @@ app.use(cors());
 app.use("/auth", authRouter);
 
 app.use("/users", userRouter);
+
+
+app.use('/product', productRouter);
 const PORT = 8080;
 
 app.use("*", (req, res) => {
