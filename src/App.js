@@ -29,7 +29,7 @@ function App() {
             <Route path="/logout" element={<Logout></Logout>}></Route>
           </Routes>
         ) : (
-          <img src={loader}></img>
+          <img src={loader} alt="loading..."></img>
         )
       ) : (
         <Routes>

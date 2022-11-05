@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { API_BASEURL_AUTH } from "../context/constants";
+import { API_BASEURL_AUTH } from "../data/constants";
 const Signup = (props) => {
   console.log("in Sign Up component");
 

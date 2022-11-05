@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import ShoppingCart from "../Components/ShoppingCart";
 
-import { API_BASEURL_USERS } from "./constants";
+import { API_BASEURL_PRODUCT, API_BASEURL_USERS } from "../data/constants";
 
 export const AuthContext = createContext();
 
@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const tokenLocal = JSON.parse(window.localStorage.getItem("token"));
   const [token, setToken] = useState(tokenLocal);
   const [user, setUser] = useState();
+  const [products, setProducts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([{
     id:0,
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     (quantity, item) => item.quantity + quantity,
     0
   )
-  console.log("token", token, "user", user, "cart items", cartItems, 'cartQuantity', cartQuantity);
+  console.log("token", token, "user", user, "cart items", cartItems, 'cartQuantity', cartQuantity, 'products', products);
   useEffect(() => {
     console.log(`!!${token}!!`);
 
@@ -37,6 +38,16 @@ export const AuthProvider = ({ children }) => {
       const res = await axios.get(`${API_BASEURL_USERS}/getme`, config);
       setUser(res.data);
       console.log("this is response from use effect of context", res);
+    })();
+
+
+    (async () => {
+      const response = await axios.get(`${API_BASEURL_PRODUCT}`);
+      if(!response){
+        console.log('no response', response);
+        return;
+      }
+      setProducts(response.data);
     })();
     console.log("use effect of context");
   }, [token]);
@@ -113,6 +124,7 @@ export const AuthProvider = ({ children }) => {
         cartQuantity,
         openCart,
         closeCart,
+        products,
       }}
     >
       {children}

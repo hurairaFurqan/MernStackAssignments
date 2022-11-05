@@ -14,6 +14,7 @@ const CartItem = ({ id, quantity }) => {
       <img
         src={item.imgUrl}
         style={{ objectFit: "cover", width: "150px", height: "75px" }}
+        alt="loading ..."
       ></img>
 
       <div className="me-auto">

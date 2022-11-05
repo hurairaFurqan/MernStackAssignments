@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { API_BASEURL_USERS } from "../context/constants";
+import { API_BASEURL_USERS } from "../data/constants";
 
 const User = () => {
   console.log("in User component");

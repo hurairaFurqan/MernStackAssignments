@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { API_BASEURL_AUTH } from "../context/constants";
+import { API_BASEURL_AUTH } from "../data/constants";
 
 const Signin = (props) => {
   // console.log('in Sign In component');
@@ -44,7 +44,7 @@ const Signin = (props) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="form-outline mb-4 container">
+        <div className="form-outline mb-4 container mt-2">
           <input
             type={"email"}
             name={"email"}
